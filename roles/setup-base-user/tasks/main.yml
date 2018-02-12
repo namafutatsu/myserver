@@ -1,0 +1,11 @@
+---
+- name: Create the base user
+  user:
+    name: "{{username}}"
+    group: admin
+
+- name: Transfer my SSH key
+  authorized_key:
+    user: "{{username}}"
+    state: present
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
