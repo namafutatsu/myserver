@@ -2,9 +2,18 @@
 - name: Create the base user
   user:
     name: "{{username}}"
-    group: admin
+    state: present
+    shell: /bin/bash
 
-- name: Transfer my SSH key
+- name: Allow this user to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^victor'
+    line: 'victor ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: Transfer its SSH key
   authorized_key:
     user: "{{username}}"
     state: present

@@ -1,7 +1,5 @@
 ---
 - hosts: myserver
   become: yes
-  vars:
-    username: victor
   roles:
-    - role: setup-base-user
+    - role: setup-packages
