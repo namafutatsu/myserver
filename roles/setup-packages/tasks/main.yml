@@ -16,11 +16,14 @@
     state: present
     name: "{{item}}"
   with_items:
+    - git
     - nginx
     - python-acme
     - python-certbot
     - certbot
     - python-certbot-nginx
+    - curl
+    - make
 
 - name: Remove default nginx config
   file:

@@ -1,0 +1,7 @@
+---
+r:
+  package: "{{du_package}}"
+  repository: "{{du_repository}}"
+  site_root: "/home/{{username}}/projects/{{du_server_name}}"
+  port: "{{du_port}}"
+  env_vars: "{{du_env}}"

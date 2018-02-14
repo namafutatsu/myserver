@@ -1,0 +1,93 @@
+---
+- name: Ensure site root folder is present
+  file:
+    state: directory
+    path: "{{r.site_root}}"
+    owner: "{{username}}"
+    mode: 0755
+
+- name: Setup django packages
+  apt:
+    state: present
+    name: "{{item}}"
+  with_items:
+    - uwsgi
+    - uwsgi-plugin-python3
+    - python-pip
+    - python-psycopg2
+    - python3-venv
+    - libgdal20
+    - postgresql-9.6
+    - postgresql-9.6-postgis-2.3
+
+- name: Change the default credentials of postgresql
+  lineinfile:
+    path: /etc/postgresql/9.6/main/pg_hba.conf
+    regexp: 'local\s+all\s+postgres\s+peer'
+    line: local all postgres trust
+
+- name: Add one more fallback to postgres user
+  lineinfile:
+    path: /etc/postgresql/9.6/main/pg_hba.conf
+    insertafter: '^local\s+all\s+postgres\s+trust$'
+    line: host all postgres localhost trust
+
+- name: Reload postgresql
+  service:
+    name: postgresql
+    state: reloaded
+
+- name: Ensure database is present
+  postgresql_db:
+    name: "{{r.package}}"
+    encoding: UTF-8
+    state: present
+
+- name: Add postgis extension
+  postgresql_ext:
+    name: postgis
+    db: "{{r.package}}"
+
+- name: Sync repository to the application folder
+  become: no
+  tags: deploy
+  git:
+    repo: "git@github.com:{{r.repository}}"
+    version: master
+    dest: "{{r.site_root}}/src"
+    accept_hostkey: 'yes'
+
+- name: Install Python requirements
+  become: no
+  tags: deploy
+  pip:
+    chdir: "{{r.site_root}}/src"
+    editable: true
+    name: "."
+    state: latest
+    virtualenv: "{{r.site_root}}/venv"
+    virtualenv_command: /usr/bin/python3 -m venv
+
+- name: Migrate application
+  become: no
+  tags: deploy
+  environment: "{{r.env_vars}}"
+  command: "{{r.site_root}}/venv/bin/django-admin migrate"
+
+- name: Add uwsgi configuration
+  template:
+    src: uwsgi.ini.j2
+    dest: "{{r.site_root}}/uwsgi.ini"
+
+- name: Add service for the Django site
+  template:
+    src: service.j2
+    dest: "/etc/systemd/system/{{r.package}}.service"
+
+- name: Restart the service
+  tags: deploy
+  systemd:
+      name: "{{r.package}}"
+      daemon_reload: 'yes'
+      enabled: 'yes'
+      state: restarted
