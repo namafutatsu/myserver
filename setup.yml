@@ -21,8 +21,8 @@
         ALLOWED_HOSTS: "api.cocolarp.com,127.0.0.1"
         CORS_ORIGIN_WHITELIST: "api.cocolarp.com,127.0.0.1:8000"
 
-    - role: https-website
+    - role: register-letsencrypt
       hw_server_name: cocolarp.com
 
-    - role: https-website
+    - role: register-letsencrypt
       hw_server_name: api.cocolarp.com
