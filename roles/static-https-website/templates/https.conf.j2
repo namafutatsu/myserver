@@ -25,11 +25,9 @@ server {
   keepalive_timeout 65;
   types_hash_max_size 2048;
 
-  # Enable gzip: HTML5 Boilerplate defaults https://github.com/darktable/html5-boilerplate-server-configs
   gzip  on;
-  gzip_http_version 1.0;
-  gzip_comp_level 2;
-  gzip_buffers 4 8k;
+  gzip_vary on;
+  gzip_min_length 1024;
   gzip_proxied any;
   gzip_types
     # text/html is always compressed by HttpGzipModule
@@ -47,7 +45,6 @@ server {
     application/vnd.ms-fontobject
     image/svg+xml;
   gzip_static on;
-
 
   location ~* (\.(?:html)$|app.settings.js)$ {
     add_header Cache-Control "public, must-revalidate, max-age=0";
