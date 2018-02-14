@@ -1,0 +1,24 @@
+server {
+  listen  443 ssl;
+  server_name {{r.server_name}};
+
+  ssl_certificate         /etc/letsencrypt/live/{{r.server_name}}/fullchain.pem;
+  ssl_certificate_key     /etc/letsencrypt/live/{{r.server_name}}/privkey.pem;
+  ssl_trusted_certificate /etc/letsencrypt/live/{{r.server_name}}/fullchain.pem;
+
+  ssl_session_cache shared:SSL:50m;
+  ssl_session_timeout 5m;
+  ssl_stapling on;
+  ssl_stapling_verify on;
+
+  access_log /var/log/nginx/{{r.server_name}}-access.log;
+  error_log /var/log/nginx/{{r.server_name}}-error.log;
+
+  root {{r.site_root}};
+
+  index index.html;
+
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}

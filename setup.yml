@@ -1,5 +1,14 @@
 ---
 - hosts: myserver
-  become: yes
+  become: 'yes'
+  gather_facts: 'no'
+  vars:
+    username: victor
   roles:
     - role: setup-packages
+
+    - role: https-website
+      hw_server_name: cocolarp.com
+
+    - role: https-website
+      hw_server_name: api.cocolarp.com

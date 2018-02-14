@@ -1,6 +1,33 @@
 ---
+- name: Add stretch-backports repo
+  apt_repository:
+    update_cache: 'yes'
+    repo: 'deb http://ftp.debian.org/debian stretch-backports main non-free contrib'
+    state: present
+
 - name: Update APT packages
   apt:
-    update_cache: yes
+    update_cache: 'yes'
     cache_valid_time: 3600
     upgrade: full
+
+- name: Setup base packages
+  apt:
+    state: present
+    name: "{{item}}"
+  with_items:
+    - nginx
+    - python-acme
+    - python-certbot
+    - certbot
+    - python-certbot-nginx
+
+- name: Remove default nginx config
+  file:
+    name: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Reload nginx
+  service:
+    name: nginx
+    state: reloaded
