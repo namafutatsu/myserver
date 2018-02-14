@@ -48,7 +48,7 @@
     name: postgis
     db: "{{r.package}}"
 
-- name: Sync repository to the application folder
+- name: Sync repository to the application folder (needs SSH forwarding)
   become: no
   tags: deploy
   git:
@@ -73,6 +73,12 @@
   tags: deploy
   environment: "{{r.env_vars}}"
   command: "{{r.site_root}}/venv/bin/django-admin migrate"
+
+- name: Collect static files
+  become: no
+  tags: deploy
+  environment: "{{r.env_vars}}"
+  command: "{{r.site_root}}/venv/bin/django-admin collectstatic --noinput"
 
 - name: Add uwsgi configuration
   template:

@@ -1,0 +1,4 @@
+---
+r:
+  server_name: "{{shw_server_name}}"
+  site_root: "/home/{{username}}/projects/{{shw_server_name}}"

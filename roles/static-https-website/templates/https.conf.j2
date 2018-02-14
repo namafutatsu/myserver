@@ -14,7 +14,7 @@ server {
   access_log /var/log/nginx/{{r.server_name}}-access.log;
   error_log /var/log/nginx/{{r.server_name}}-error.log;
 
-  root {{r.site_root}};
+  root {{r.site_root}}/dist;
 
   index index.html;
 
