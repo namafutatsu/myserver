@@ -81,6 +81,7 @@
   command: "{{r.site_root}}/venv/bin/django-admin collectstatic --noinput"
 
 - name: Add uwsgi configuration
+  tags: deploy
   template:
     src: uwsgi.ini.j2
     dest: "{{r.site_root}}/uwsgi.ini"
