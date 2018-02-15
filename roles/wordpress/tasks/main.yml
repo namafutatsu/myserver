@@ -19,8 +19,8 @@
 
 - name: Create mysql user
   mysql_user:
-    name: wordpress
-    password: "{{fampintantana.mysql_password}}"
+    name: "{{r.mysql_user}}"
+    password: "{{r.mysql_password}}"
     priv: '*.*:ALL'
 
 - name: Fix security issue with default php
@@ -77,10 +77,10 @@
       line: "define('DB_NAME', '{{r.project}}');"
 
     - regexp: "define\\('DB_USER', '(.)+'\\);"
-      line: "define('DB_USER', 'wordpress');"
+      line: "define('DB_USER', '{{r.mysql_user}}');"
 
     - regexp: "define\\('DB_PASSWORD', '(.)+'\\);"
-      line: "define('DB_PASSWORD', '{{fampintantana.mysql_password}}');"
+      line: "define('DB_PASSWORD', '{{r.mysql_password}}');"
 
 - name: Add HTTPS site configuration
   template:

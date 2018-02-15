@@ -14,3 +14,5 @@
       w_project: fampintantana
       w_server_name: fampintantana.fr
       w_repository: namafutatsu/fampintantana
+      w_mysql_user: wordpress
+      w_mysql_user: "{{fampintantana.mysql_password}}"

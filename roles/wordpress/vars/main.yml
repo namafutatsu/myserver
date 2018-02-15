@@ -4,3 +4,5 @@ r:
   site_root: "/home/{{username}}/projects/{{w_server_name}}"
   server_name: "{{w_server_name}}"
   repository: "{{w_repository}}"
+  mysql_user: "{{w_mysql_user}}"
+  mysql_password: "{{w_mysql_password}}"
