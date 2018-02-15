@@ -43,13 +43,21 @@
     mode: 0755
 
 - name: Sync repository to the application folder (needs SSH forwarding)
-  become: 'no'
   tags: deploy
+  become: 'no'
   git:
     repo: "git@github.com:{{r.repository}}"
     version: master
     dest: "{{r.site_root}}/wordpress"
     accept_hostkey: 'yes'
+
+- name: Ensure the whole project folder has correct access rights
+  tags: deploy
+  file:
+    path: "{{r.site_root}}/wordpress"
+    recurse: 'yes'
+    state: directory
+    owner: www-data
 
 - name: Setup configuration
   tags: deploy
