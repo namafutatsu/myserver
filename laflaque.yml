@@ -1,0 +1,18 @@
+---
+- hosts: all
+  become: 'yes'
+  gather_facts: 'no'
+  vars:
+    username: victor
+  vars_files:
+    - vars/vault.yml
+  roles:
+    - role: register-letsencrypt
+      hw_server_name: laflaque.fr
+
+    - role: wordpress
+      w_project: laflaque
+      w_server_name: laflaque.fr
+      w_repository: namafutatsu/laflaqueweb
+      w_mysql_user: laflaque
+      w_mysql_password: "{{laflaque.mysql_password}}"
