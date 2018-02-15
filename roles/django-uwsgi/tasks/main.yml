@@ -49,7 +49,7 @@
     db: "{{r.package}}"
 
 - name: Sync repository to the application folder (needs SSH forwarding)
-  become: no
+  become: 'no'
   tags: deploy
   git:
     repo: "git@github.com:{{r.repository}}"
@@ -58,27 +58,33 @@
     accept_hostkey: 'yes'
 
 - name: Install Python requirements
-  become: no
+  become: 'no'
   tags: deploy
   pip:
     chdir: "{{r.site_root}}/src"
-    editable: true
+    editable: 'true'
     name: "."
-    state: latest
+    state: present
     virtualenv: "{{r.site_root}}/venv"
     virtualenv_command: /usr/bin/python3 -m venv
 
 - name: Migrate application
-  become: no
+  become: 'no'
   tags: deploy
   environment: "{{r.env_vars}}"
-  command: "{{r.site_root}}/venv/bin/django-admin migrate"
+  django_manage:
+    app_path: "{{r.site_root}}/src"
+    virtualenv: "{{r.site_root}}/venv"
+    command: migrate
 
 - name: Collect static files
-  become: no
+  become: 'no'
   tags: deploy
   environment: "{{r.env_vars}}"
-  command: "{{r.site_root}}/venv/bin/django-admin collectstatic --noinput"
+  django_manage:
+    app_path: "{{r.site_root}}/src"
+    virtualenv: "{{r.site_root}}/venv"
+    command: "collectstatic --noinput"
 
 - name: Add uwsgi configuration
   tags: deploy
@@ -94,7 +100,7 @@
 - name: Restart the service
   tags: deploy
   systemd:
-      name: "{{r.package}}"
-      daemon_reload: 'yes'
-      enabled: 'yes'
-      state: restarted
+    name: "{{r.package}}"
+    daemon_reload: 'yes'
+    enabled: 'yes'
+    state: restarted
