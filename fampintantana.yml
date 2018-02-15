@@ -13,3 +13,4 @@
     - role: wordpress
       w_project: fampintantana
       w_server_name: fampintantana.fr
+      w_repository: namafutatsu/fampintantana

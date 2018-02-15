@@ -3,3 +3,4 @@ r:
   project: "{{w_project}}"
   site_root: "/home/{{username}}/projects/{{w_server_name}}"
   server_name: "{{w_server_name}}"
+  repository: "{{w_repository}}"
