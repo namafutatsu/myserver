@@ -26,7 +26,7 @@
 - name: Fix security issue with default php
   lineinfile:
     path: /etc/php/7.0/fpm/php.ini
-    regexp: '^;cgi.fix_pathinfo=1'
+    regexp: 'cgi.fix_pathinfo='
     line: "cgi.fix_pathinfo=0"
 
 - name: Reload php-fpm
@@ -39,6 +39,7 @@
   file:
     path: "{{r.site_root}}/wordpress"
     state: directory
+    recurse: 'yes'
     owner: "{{username}}"
     mode: 0755
 
@@ -48,6 +49,7 @@
   git:
     repo: "git@github.com:{{r.repository}}"
     version: master
+    force: 'yes'
     dest: "{{r.site_root}}/wordpress"
     accept_hostkey: 'yes'
 
