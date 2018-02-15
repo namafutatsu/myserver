@@ -1,5 +1,5 @@
 ---
-- hosts: myserver
+- hosts: cocolarp
   become: 'yes'
   gather_facts: 'no'
   vars:
@@ -7,8 +7,6 @@
   vars_files:
     - vars/vault.yml
   roles:
-    - role: setup-packages
-
     - role: django-uwsgi
       du_package: backent
       du_repository: namafutatsu/backent
