@@ -28,7 +28,7 @@
     path: /etc/php/7.0/fpm/php.ini
     regexp: '^;cgi.fix_pathinfo=1'
     line: "cgi.fix_pathinfo=0"
- 
+
 - name: Reload php-fpm
   service:
     name: php7.0-fpm
@@ -56,10 +56,9 @@
   copy:
     src: "{{r.site_root}}/wordpress/wp-config-sample.php"
     dest: "{{r.site_root}}/wordpress/wp-config.php"
-    remote_src: yes
+    remote_src: 'yes'
 
 - name: Edit configuration
-  tags: xxx
   lineinfile:
     dest: "{{r.site_root}}/wordpress/wp-config.php"
     regexp: "{{ item.regexp }}"
@@ -75,13 +74,11 @@
       line: "define('DB_PASSWORD', '{{fampintantana.mysql_password}}');"
 
 - name: Add HTTPS site configuration
-  tags: xxx
   template:
     src: https.conf.j2
     dest: "/etc/nginx/sites-enabled/{{r.server_name}}.https.conf"
 
 - name: Reload nginx
-  tags: xxx
   service:
     name: nginx
     state: reloaded
