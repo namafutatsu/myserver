@@ -1,4 +1,0 @@
----
-r:
-  server_name: "{{dhw_server_name}}"
-  port: "{{dhw_port}}"

@@ -8,7 +8,7 @@
     - vars/vault.yml
   roles:
     - role: register-letsencrypt
-      hw_server_name: laflaque.fr
+      rle_server_name: laflaque.fr
 
     - role: wordpress
       w_project: laflaque

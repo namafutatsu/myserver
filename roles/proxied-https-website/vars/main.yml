@@ -1,0 +1,4 @@
+---
+r:
+  server_name: "{{phw_server_name}}"
+  port: "{{phw_port}}"

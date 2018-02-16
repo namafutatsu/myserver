@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: monpoteleconsultant
   become: 'yes'
   gather_facts: 'no'
   vars:
@@ -8,7 +8,7 @@
     - vars/vault.yml
   roles:
     - role: register-letsencrypt
-      hw_server_name: monpoteleconsultant.fr
+      rle_server_name: monpoteleconsultant.fr
 
     - role: static-https-website
       shw_server_name: monpoteleconsultant.fr

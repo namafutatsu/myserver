@@ -20,14 +20,14 @@
         CORS_ORIGIN_WHITELIST: "cocolarp.com"
 
     - role: register-letsencrypt
-      hw_server_name: api.cocolarp.com
+      rle_server_name: api.cocolarp.com
 
-    - role: django-https-website
-      dhw_server_name: api.cocolarp.com
-      dhw_port: 8000
+    - role: proxied-https-website
+      phw_server_name: api.cocolarp.com
+      phw_port: 8000
 
     - role: register-letsencrypt
-      hw_server_name: cocolarp.com
+      rle_server_name: cocolarp.com
 
     - role: static-https-website
       shw_server_name: cocolarp.com
