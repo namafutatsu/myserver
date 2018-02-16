@@ -1,0 +1,14 @@
+---
+- hosts: all
+  become: 'yes'
+  gather_facts: 'no'
+  vars:
+    username: victor
+  vars_files:
+    - vars/vault.yml
+  roles:
+    - role: register-letsencrypt
+      hw_server_name: monpoteleconsultant.fr
+
+    - role: static-https-website
+      shw_server_name: monpoteleconsultant.fr
