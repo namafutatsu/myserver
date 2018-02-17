@@ -1,0 +1,8 @@
+---
+r:
+  package: "{{ns_package}}"
+  repository: "{{ns_repository}}"
+  site_root: "/home/{{username}}/projects/{{ns_server_name}}"
+  port: "{{ns_port}}"
+  system_packages: "{{ns_system_packages}}"
+  env_vars: "{{ns_env}}"

@@ -1,0 +1,72 @@
+---
+- name: Ensure apt-transport-https is installed
+  apt:
+    name: apt-transport-https
+    state: present
+
+- name: Add Nodesource apt key
+  apt_key:
+    url: https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x1655A0AB68576280
+    id: "68576280"
+    state: present
+
+- name: Add NodeSource repositories for Node.js
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  with_items:
+    - "deb https://deb.nodesource.com/node_9.x stretch main"
+    - "deb-src https://deb.nodesource.com/node_9.x stretch main"
+  register: node_repo
+
+- name: Update apt cache if repo was added
+  apt:
+    update_cache: 'yes'
+  when: node_repo.changed
+
+- name: Ensure Node.js and npm are installed
+  apt:
+    name: nodejs=9*
+    state: present
+
+- name: Ensure site root folder is present
+  file:
+    state: directory
+    path: "{{r.site_root}}"
+    owner: "{{username}}"
+    mode: 0755
+
+- name: Setup application packages
+  apt:
+    state: present
+    name: "{{item}}"
+  with_items: "{{r.system_packages}}"
+
+- name: Sync repository to the application folder (needs SSH forwarding)
+  become: 'no'
+  tags: deploy
+  git:
+    repo: "git@github.com:{{r.repository}}"
+    version: master
+    dest: "{{r.site_root}}"
+    accept_hostkey: 'yes'
+
+- name: Install node modules
+  become: 'no'
+  tags: deploy
+  npm:
+    path: "{{r.site_root}}"
+    state: latest
+
+- name: Add service for the node server
+  template:
+    src: service.j2
+    dest: "/etc/systemd/system/{{r.package}}.service"
+
+- name: Restart the service
+  tags: deploy
+  systemd:
+    name: "{{r.package}}"
+    daemon_reload: 'yes'
+    enabled: 'yes'
+    state: restarted

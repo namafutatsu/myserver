@@ -1,0 +1,35 @@
+---
+- hosts: spotlight
+  become: 'yes'
+  gather_facts: 'no'
+  vars:
+    username: victor
+  roles:
+    - role: node-server
+      ns_package: spotlight-server
+      ns_repository: namafutatsu/spotlight_server
+      ns_server_name: ws.spotlight.cam
+      ns_port: 8001
+      ns_system_packages:
+        - libcairo2-dev
+        - libjpeg-dev
+        - libpango1.0-dev
+        - libgif-dev
+        - build-essential
+        - g++
+      ns_env:
+        LISTEN_PORT: 8001
+
+    - role: register-letsencrypt
+      rle_server_name: ws.spotlight.cam
+
+    - role: proxied-https-website
+      phw_server_name: ws.spotlight.cam
+      phw_port: 8001
+      phw_is_websocket: True
+
+    - role: register-letsencrypt
+      rle_server_name: spotlight.cam
+
+    - role: static-https-website
+      shw_server_name: spotlight.cam

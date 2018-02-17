@@ -1,0 +1,16 @@
+[Unit]
+Description={{r.package}} service
+After=nginx.service
+
+[Service]
+{% for key, value in r.env_vars.items() %}
+Environment="{{ key }}={{ value }}"
+{% endfor %}
+StandardError=syslog
+Restart=on-failure
+WorkingDirectory={{r.site_root}}
+TimeoutStartSec=5
+ExecStart=/usr/bin/node {{r.site_root}}/src/index.js --name {{r.package}}
+
+[Install]
+WantedBy=multi-user.target

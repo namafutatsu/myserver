@@ -2,3 +2,4 @@
 r:
   server_name: "{{phw_server_name}}"
   port: "{{phw_port}}"
+  is_websocket: "{{phw_is_websocket | default(False)}}"

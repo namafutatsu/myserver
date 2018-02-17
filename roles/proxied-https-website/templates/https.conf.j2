@@ -22,12 +22,18 @@ server {
   }
 
   location @backend {
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-Proto https;
+    {% if r.is_websocket %}
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+      proxy_http_version 1.1;
+    {% else %}
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-Proto https;
+      proxy_set_header X-Forwarded-User $remote_user;
+      proxy_redirect off;
+    {% endif %}
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-User $remote_user;
     proxy_set_header Host $http_host;
-    proxy_redirect off;
     proxy_pass http://127.0.0.1:{{r.port}};
   }
 }
