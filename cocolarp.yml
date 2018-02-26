@@ -17,7 +17,7 @@
         SECRET_KEY: "{{backent.secret_key}}"
         DATABASE_URL: "postgis://postgres:@127.0.0.1:5432/backent"
         ALLOWED_HOSTS: "api.cocolarp.com,127.0.0.1"
-        CORS_ORIGIN_WHITELIST: "cocolarp.com"
+        CORS_ORIGIN_WHITELIST: "www.cocolarp.com"
 
     - role: register-letsencrypt
       rle_server_name: api.cocolarp.com
@@ -27,7 +27,14 @@
       phw_port: 8000
 
     - role: register-letsencrypt
+      tags: frontend
       rle_server_name: cocolarp.com
 
+    - role: register-letsencrypt
+      tags: frontend
+      rle_server_name: www.cocolarp.com
+
     - role: static-https-website
-      shw_server_name: cocolarp.com
+      tags: frontend
+      shw_server_name: www.cocolarp.com
+      shw_non_www_server_name: cocolarp.com

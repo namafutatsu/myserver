@@ -1,3 +1,20 @@
+{% if r.non_www_server_name %}
+server {
+  listen 80;
+  server_name {{r.non_www_server_name}};
+  return 301 https://{{r.server_name}}$request_uri;
+}
+
+server {
+  listen 443 ssl;
+  server_name {{r.non_www_server_name}};
+  ssl_certificate         /etc/letsencrypt/live/{{r.non_www_server_name}}/fullchain.pem;
+  ssl_certificate_key     /etc/letsencrypt/live/{{r.non_www_server_name}}/privkey.pem;
+  ssl_trusted_certificate /etc/letsencrypt/live/{{r.non_www_server_name}}/fullchain.pem;
+  return 301 https://{{r.server_name}}$request_uri;
+}
+{% endif %}
+
 server {
   listen  443 ssl;
   server_name {{r.server_name}};

@@ -1,4 +1,5 @@
 ---
 r:
   server_name: "{{shw_server_name}}"
+  non_www_server_name: "{{shw_non_www_server_name}}"
   site_root: "/home/{{username}}/projects/{{shw_server_name}}"
