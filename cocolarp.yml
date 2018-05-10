@@ -8,6 +8,7 @@
     - vars/vault.yml
   roles:
     - role: django-uwsgi
+      tags: backend
       du_package: backent
       du_repository: namafutatsu/backent
       du_server_name: api.cocolarp.com
@@ -21,9 +22,11 @@
         GOOGLE_MAPS_JAVASCRIPT_API_KEY: "{{backent.google_maps_javascript_api_key}}"
 
     - role: register-letsencrypt
+      tags: backend
       rle_server_name: api.cocolarp.com
 
     - role: proxied-https-website
+      tags: backend
       phw_server_name: api.cocolarp.com
       phw_port: 8000
 
