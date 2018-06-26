@@ -8,11 +8,17 @@
     - vars/vault.yml
   roles:
     - role: register-letsencrypt
+      tags: nginx
       rle_server_name: laflaque.fr
+
+    - role: register-letsencrypt
+      tags: nginx
+      rle_server_name: www.laflaque.fr
 
     - role: wordpress
       w_project: laflaque
       w_server_name: laflaque.fr
+      w_non_www_server_name: www.laflaque.fr
       w_repository: namafutatsu/laflaqueweb
       w_mysql_user: laflaque
       w_mysql_password: "{{laflaque.mysql_password}}"

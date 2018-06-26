@@ -86,11 +86,13 @@
       line: "define('DB_PASSWORD', '{{r.mysql_password}}');"
 
 - name: Add HTTPS site configuration
+  tags: nginx
   template:
     src: https.conf.j2
     dest: "/etc/nginx/sites-enabled/{{r.server_name}}.https.conf"
 
 - name: Reload nginx
+  tags: nginx
   service:
     name: nginx
     state: reloaded
