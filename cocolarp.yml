@@ -8,7 +8,9 @@
     - vars/vault.yml
   roles:
     - role: django-uwsgi
-      tags: backend
+      tags:
+      - backend
+      - uwsgi
       du_package: backent
       du_repository: namafutatsu/backent
       du_server_name: api.cocolarp.com
