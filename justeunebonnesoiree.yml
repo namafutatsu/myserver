@@ -1,0 +1,25 @@
+---
+- hosts: laflaque
+  become: 'yes'
+  gather_facts: 'no'
+  vars:
+    username: victor
+  vars_files:
+    - vars/vault.yml
+  roles:
+    - role: register-letsencrypt
+      tags:
+        - frontend
+        - certs
+      rle_server_name: justeunebonnesoiree.laflaque.fr
+
+    - role: register-letsencrypt
+      tags:
+        - frontend
+        - certs
+      rle_server_name: jubs.laflaque.fr
+
+    - role: static-https-website
+      tags: frontend
+      shw_server_name: justeunebonnesoiree.laflaque.fr
+      shw_non_www_server_name: jubs.laflaque.fr
