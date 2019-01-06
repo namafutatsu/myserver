@@ -18,7 +18,7 @@
       du_env:
         DJANGO_SETTINGS_MODULE: "backent.settings"
         SECRET_KEY: "{{backent.secret_key}}"
-        DATABASE_URL: "postgis://postgres:@127.0.0.1:5432/backent0"
+        DATABASE_URL: "postgis://postgres:@127.0.0.1:5433/backent"
         ALLOWED_HOSTS: "api.cocolarp.com,127.0.0.1"
         CORS_ORIGIN_WHITELIST: "www.cocolarp.com"
         GOOGLE_MAPS_JAVASCRIPT_API_KEY: "{{backent.google_maps_javascript_api_key}}"

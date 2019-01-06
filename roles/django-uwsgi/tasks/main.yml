@@ -17,18 +17,19 @@
     - python-psycopg2
     - python3-venv
     - libgdal20
-    - postgresql-9.6
-    - postgresql-9.6-postgis-2.3
+    - postgresql-10
+    - postgresql-10-postgis-2.5
+    - postgresql-10-postgis-2.5-scripts
 
 - name: Change the default credentials of postgresql
   lineinfile:
-    path: /etc/postgresql/9.6/main/pg_hba.conf
+    path: /etc/postgresql/10/main/pg_hba.conf
     regexp: 'local\s+all\s+postgres\s+peer'
     line: local all postgres trust
 
 - name: Add one more fallback to postgres user
   lineinfile:
-    path: /etc/postgresql/9.6/main/pg_hba.conf
+    path: /etc/postgresql/10/main/pg_hba.conf
     insertafter: '^local\s+all\s+postgres\s+trust$'
     line: host all postgres localhost trust
 
