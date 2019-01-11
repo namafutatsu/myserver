@@ -78,6 +78,15 @@
     virtualenv: "{{r.site_root}}/venv"
     command: migrate
 
+- name: Create cache table
+  become: 'no'
+  tags: deploy
+  environment: "{{r.env_vars}}"
+  django_manage:
+    app_path: "{{r.site_root}}/src"
+    virtualenv: "{{r.site_root}}/venv"
+    command: createcachetable
+
 - name: Collect static files
   become: 'no'
   tags: deploy
