@@ -11,42 +11,35 @@
       tags:
       - backend
       - uwsgi
-      du_package: backent
+      du_package: backent_preprod
       du_uwsgi_pkg: backent
-      du_database: backent
+      du_database: backent_preprod
       du_repository: namafutatsu/backent
-      du_server_name: api.cocolarp.com
-      du_port: 8000
+      du_server_name: api-preprod.cocolarp.com
+      du_port: 8002
       du_env:
         DJANGO_SETTINGS_MODULE: "backent.settings"
         SECRET_KEY: "{{backent.secret_key}}"
-        DATABASE_URL: "postgis://postgres:@127.0.0.1:5433/backent"
-        ALLOWED_HOSTS: "api.cocolarp.com,127.0.0.1"
-        CORS_ORIGIN_WHITELIST: "www.cocolarp.com"
+        DATABASE_URL: "postgis://postgres:@127.0.0.1:5433/backent_preprod"
+        ALLOWED_HOSTS: "api-preprod.cocolarp.com,127.0.0.1"
+        CORS_ORIGIN_WHITELIST: "preprod.cocolarp.com"
         GOOGLE_MAPS_JAVASCRIPT_API_KEY: "{{backent.google_maps_javascript_api_key}}"
 
     - role: register-letsencrypt
       tags: backend
-      rle_server_name: api.cocolarp.com
+      rle_server_name: api-preprod.cocolarp.com
 
     - role: proxied-https-website
       tags: backend
-      phw_server_name: api.cocolarp.com
-      phw_port: 8000
+      phw_server_name: api-preprod.cocolarp.com
+      phw_port: 8002
 
     - role: register-letsencrypt
       tags:
         - frontend
         - certs
-      rle_server_name: cocolarp.com
-
-    - role: register-letsencrypt
-      tags:
-        - frontend
-        - certs
-      rle_server_name: www.cocolarp.com
+      rle_server_name: preprod.cocolarp.com
 
     - role: static-https-website
       tags: frontend
-      shw_server_name: www.cocolarp.com
-      shw_non_www_server_name: cocolarp.com
+      shw_server_name: preprod.cocolarp.com

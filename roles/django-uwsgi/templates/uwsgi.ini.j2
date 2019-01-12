@@ -2,7 +2,7 @@
 plugins = python3
 chdir = {{r.site_root}}/src
 home = {{r.site_root}}/venv
-module = {{r.package}}.wsgi:application
+module = {{r.uwsgi_package}}.wsgi:application
 ; socket is necessary if we want to use nginx
 http-socket = 127.0.0.1:{{r.port}}
 logto = /var/log/uwsgi/{{r.package}}.log

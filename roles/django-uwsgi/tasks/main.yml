@@ -40,14 +40,16 @@
 
 - name: Ensure database is present
   postgresql_db:
-    name: "{{r.package}}"
+    port: 5433
+    name: "{{r.database}}"
     encoding: UTF-8
     state: present
 
 - name: Add postgis extension
   postgresql_ext:
+    port: 5433
     name: postgis
-    db: "{{r.package}}"
+    db: "{{r.database}}"
 
 - name: Sync repository to the application folder (needs SSH forwarding)
   become: 'no'

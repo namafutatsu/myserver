@@ -1,6 +1,8 @@
 ---
 r:
   package: "{{du_package}}"
+  uwsgi_package: "{{du_uwsgi_pkg}}"
+  database: "{{du_database}}"
   repository: "{{du_repository}}"
   site_root: "/home/{{username}}/projects/{{du_server_name}}"
   port: "{{du_port}}"
