@@ -68,11 +68,11 @@ server {
   }
 
   location ~* \.(?:js|css|json)$ {
-    add_header Cache-Control "public, must-revalidate, proxy-revalidate, max-age 86400";
+    add_header Cache-Control "public, must-revalidate, proxy-revalidate, max-age 31536000";
   }
 
   location ~* \.(?:map)$ {
     add_header Content-Type "application/json";
-    add_header Cache-Control "public, must-revalidate, proxy-revalidate, max-age 86400";
+    add_header Cache-Control "public, must-revalidate, proxy-revalidate, max-age 31536000";
   }
 }
