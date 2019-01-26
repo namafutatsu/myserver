@@ -3,7 +3,7 @@ r:
   project: "{{w_project}}"
   site_root: "/home/{{username}}/projects/{{w_project}}"
   server_name: "{{w_server_name}}"
-  non_www_server_name: "{{w_non_www_server_name}}"
+  non_www_server_name: "{{w_non_www_server_name | default(False) }}"
   repository: "{{w_repository}}"
   mysql_user: "{{w_mysql_user}}"
   mysql_password: "{{w_mysql_password}}"

@@ -1,0 +1,19 @@
+---
+- hosts: all
+  become: 'yes'
+  gather_facts: 'no'
+  vars:
+    username: victor
+  vars_files:
+    - vars/vault.yml
+  roles:
+    - role: register-letsencrypt
+      tags: nginx
+      rle_server_name: test-gyr.cocolarp.com
+
+    - role: wordpress
+      w_project: test-gyr
+      w_server_name: test-gyr.cocolarp.com
+      w_repository: namafutatsu/laflaqueweb
+      w_mysql_user: testgyr
+      w_mysql_password: "{{testgyr.mysql_password}}"
