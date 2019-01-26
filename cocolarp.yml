@@ -24,6 +24,7 @@
         ALLOWED_HOSTS: "api.cocolarp.com,127.0.0.1"
         CORS_ORIGIN_WHITELIST: "www.cocolarp.com"
         GOOGLE_MAPS_JAVASCRIPT_API_KEY: "{{backent.google_maps_javascript_api_key}}"
+        API_EVENT_LIST_CACHE_DURATION: 0
 
     - role: register-letsencrypt
       tags: backend
