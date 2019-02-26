@@ -1,0 +1,35 @@
+---
+- hosts: all
+  become: 'yes'
+  gather_facts: 'no'
+  vars:
+    username: victor
+  vars_files:
+    - vars/vault.yml
+  roles:
+    - role: django-uwsgi
+      tags:
+      - backend
+      - uwsgi
+      du_package: mdp_api
+      du_uwsgi_pkg: mdp_api
+      du_database: magasindeproducteurs
+      du_repository: namafutatsu/mdp_api
+      du_server_name: mdp-api.laflaque.fr
+      du_port: 8003
+      du_env:
+        DJANGO_SETTINGS_MODULE: "mdp_api.settings"
+        SECRET_KEY: "{{backent.secret_key}}"
+        DATABASE_URL: "postgis://postgres:@127.0.0.1:5433/magasindeproducteurs"
+        ALLOWED_HOSTS: "mdp-api.laflaque.fr,127.0.0.1"
+        CORS_ORIGIN_WHITELIST: "mdp.laflaque.fr"
+        GOOGLE_MAPS_JAVASCRIPT_API_KEY: "{{mdp_api.google_maps_javascript_api_key}}"
+
+    - role: register-letsencrypt
+      tags: backend
+      rle_server_name: mdp-api.laflaque.fr
+
+    - role: proxied-https-website
+      tags: backend
+      phw_server_name: mdp-api.laflaque.fr
+      phw_port: 8003
