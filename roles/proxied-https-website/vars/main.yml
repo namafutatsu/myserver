@@ -2,4 +2,5 @@
 r:
   server_name: "{{phw_server_name}}"
   port: "{{phw_port}}"
+  site_root: "/home/{{username}}/projects/{{phw_server_name}}"
   is_websocket: "{{phw_is_websocket | default(False)}}"

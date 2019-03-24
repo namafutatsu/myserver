@@ -5,5 +5,6 @@ r:
   database: "{{du_database}}"
   repository: "{{du_repository}}"
   site_root: "/home/{{username}}/projects/{{du_server_name}}"
+  media_path: "/home/{{username}}/projects/{{du_server_name}}/media"
   port: "{{du_port}}"
   env_vars: "{{du_env}}"

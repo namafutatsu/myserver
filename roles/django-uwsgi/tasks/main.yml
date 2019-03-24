@@ -6,6 +6,13 @@
     owner: "{{username}}"
     mode: 0755
 
+- name: Ensure media root folder is present
+  file:
+    state: directory
+    path: "{{r.media_path}}"
+    owner: "{{username}}"
+    mode: 0755
+
 - name: Setup django packages
   apt:
     state: present

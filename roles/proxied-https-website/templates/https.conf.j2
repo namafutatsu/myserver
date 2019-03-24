@@ -21,6 +21,10 @@ server {
     try_files /non-existent @backend;
   }
 
+  location /media/ {
+    root {{r.site_root}};
+  }
+
   location @backend {
     {% if r.is_websocket %}
       proxy_set_header Upgrade $http_upgrade;
