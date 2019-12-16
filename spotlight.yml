@@ -8,7 +8,7 @@
     - role: node-server
       ns_package: spotlight-server
       ns_repository: namafutatsu/spotlight_server
-      ns_server_name: ws.spotlight.cam
+      ns_server_name: ssshare-api.laflaque.fr
       ns_port: 8001
       ns_system_packages:
         - libcairo2-dev
@@ -21,15 +21,15 @@
         LISTEN_PORT: 8001
 
     - role: register-letsencrypt
-      rle_server_name: ws.spotlight.cam
+      rle_server_name: ssshare-api.laflaque.fr
 
     - role: proxied-https-website
-      phw_server_name: ws.spotlight.cam
+      phw_server_name: ssshare-api.laflaque.fr
       phw_port: 8001
       phw_is_websocket: True
 
     - role: register-letsencrypt
-      rle_server_name: spotlight.cam
+      rle_server_name: ssshare.laflaque.fr
 
     - role: static-https-website
-      shw_server_name: spotlight.cam
+      shw_server_name: ssshare.laflaque.fr
