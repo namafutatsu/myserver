@@ -31,6 +31,12 @@
     regexp: 'cgi.fix_pathinfo='
     line: "cgi.fix_pathinfo=0"
 
+- name: Increase file upload limits
+  lineinfile:
+    path: /etc/php/7.0/fpm/php.ini
+    regexp: 'upload_max_filesize = '
+    line: "upload_max_filesize = 10M"
+
 - name: Reload php-fpm
   service:
     name: php7.0-fpm
